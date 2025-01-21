@@ -12,7 +12,10 @@ export interface Config {
   };
   collections: {
     users: User;
+    product: Product;
+    template: Template;
     media: Media;
+    album: Album;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -20,7 +23,10 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    product: ProductSelect<false> | ProductSelect<true>;
+    template: TemplateSelect<false> | TemplateSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    album: AlbumSelect<false> | AlbumSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -76,6 +82,19 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product".
+ */
+export interface Product {
+  id: number;
+  name?: string | null;
+  description?: string | null;
+  image: number | Media;
+  finish?: ('matte' | 'glossy') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -95,6 +114,32 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "template".
+ */
+export interface Template {
+  id: number;
+  name?: string | null;
+  description?: string | null;
+  image: number | Media;
+  mood?: ('very somber' | 'somber' | 'neutral' | 'happy' | 'very happy') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "album".
+ */
+export interface Album {
+  id: number;
+  name?: string | null;
+  description?: string | null;
+  image: number | Media;
+  finish?: ('matte' | 'glossy') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -105,8 +150,20 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'product';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'template';
+        value: number | Template;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'album';
+        value: number | Album;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -167,6 +224,30 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product_select".
+ */
+export interface ProductSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  image?: T;
+  finish?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "template_select".
+ */
+export interface TemplateSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  image?: T;
+  mood?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -182,6 +263,18 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "album_select".
+ */
+export interface AlbumSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  image?: T;
+  finish?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -8,19 +8,31 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { Product } from './collections/Products'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+import { pt } from '@payloadcms/translations/languages/pt'
+import { Template } from './collections/Template'
+import { Media } from './collections/Media'
+import { Album } from './collections/Album'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 export default buildConfig({
+  i18n: {
+    supportedLanguages: { pt },
+  },
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  email: nodemailerAdapter({
+    defaultFromAddress: '',
+    defaultFromName: '',
+  }),
+  collections: [Users, Product, Template, Media, Album],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

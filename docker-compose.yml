@@ -23,5 +23,5 @@ services:
 
 volumes:
   data:
-  # pgdata:
+  pgdata:
   node_modules:
